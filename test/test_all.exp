@@ -1,0 +1,41 @@
+#!/usr/bin/expect
+spawn ./src/capstone_client.py admin password 0.0.0.0 26669;
+set temp 0;
+while { $temp< 300 } {
+        expect >;
+        send "get out.txt in.txt\n";
+        expect >;
+        send "get nonexist.txt in.txt\n"
+        expect >;
+        send "put out.txt in.txt\n";
+        expect >;
+        send "put out.txt in.txt overwrite\n";
+        expect >;
+        send "put nonexist.txt in.txt\n"
+        expect >;
+        send "ls\n";
+        expect >;
+        send "ls ./..\n";
+        expect >;
+        send "mkdir temp\n";
+        expect >;
+        send "delete nonexist\n";
+        expect >;
+        send "delete in.txt\n"
+        expect >;
+        send "create_user read read read_only\n";
+        expect >;
+        send "create_user write write read_write\n";
+        expect >;
+        send "create_user adminn adminn admin\n";
+        expect >;
+        send "delete_user read\n";
+        expect >;
+        send "delete_user write\n";
+        expect >;
+        send "delete_user adminn\n";
+        expect >;
+        send "delete_user nonexist\n"
+        set temp [ expr $temp + 1 ];
+}
+

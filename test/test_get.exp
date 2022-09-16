@@ -1,0 +1,9 @@
+#!/usr/bin/expect
+spawn ./src/capstone_client.py admin password 0.0.0.0 26669;
+set temp 0;
+while { $temp < 300 } {
+	expect >;
+	send "get test.txt in.txt\n";
+	sleep .25;
+	set temp [ expr $temp+1 ];
+}
